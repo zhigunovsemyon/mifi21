@@ -35,7 +35,7 @@ enum ArmstongResult {
 /*Функция проверки числа*/
 enum ArmstongResult check_armstrong(int num, int * sum);
 
-//#define INT_MAX 2'147'483'647
+// #define INT_MAX 2'147'483'647
 
 int main()
 {
@@ -91,8 +91,15 @@ int powi(int n, int p)
 	return res;
 }
 
+/*Отсчёт идёт от 0, от младших разрядов к старшим.
+ * Не предусматривает проверки на корректность*/
+inline static int get_nth_digit(int n, int i)
+{
+	return (n / powi(10, i)) % 10;
+}
+
 enum ArmstongResult check_armstrong(int num, int * sum)
 {
-	*sum = count_digits(num);
+	*sum = get_nth_digit(num, 0);
 	return ARMSTRONG_TRUE;
 }
