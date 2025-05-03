@@ -1,5 +1,5 @@
 /*=============================================================================
- * 	Написать функцию, которая определяет, является ли число, 
+ * 	Написать функцию, которая определяет, является ли число,
 передающееся ей в качестве параметра, числом Армстронга.
 Числом Армстронга (самовлюблённым числом) считается всякое
 натуральное число, которое равно сумме своих цифр, возведённых в
@@ -24,8 +24,37 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*Возможный результат функции*/
+enum ArmstongResult {
+	ARMSTRONG_FALSE = 0,
+	ARMSTRONG_TRUE = 1,
+	ARMSTRONG_FAIL = -1
+};
+
+/*Функция проверки числа*/
+enum ArmstongResult check_armstrong(int num, int * sum);
+
 int main()
 {
-	puts("Hello World!");
+	constexpr int num = 0;
+	int sum;
+
+	switch (check_armstrong(num, &sum)) {
+	case ARMSTRONG_FALSE:
+		puts("Проанализированное число не является числом Армстронга");
+		break;
+	case ARMSTRONG_TRUE:
+		puts("Проанализированное число является числом Армстронга");
+		break;
+	case ARMSTRONG_FAIL:
+		fputs("Ошибка в процессе анализа переданного числа", stderr);
+		return EXIT_FAILURE;
+	}
 	return EXIT_SUCCESS;
+}
+
+enum ArmstongResult check_armstrong(int num, int * sum)
+{
+	*sum = num;
+	return ARMSTRONG_FALSE;
 }
