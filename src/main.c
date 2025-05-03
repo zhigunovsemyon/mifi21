@@ -21,23 +21,13 @@
 3. Тестовая программа должна обеспечивать в диалоговом режиме
 ввод числа и вывод результатов его обработки.
 =============================================================================*/
-#include <assert.h>
+#include "armstrong.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-/*Возможный результат функции*/
-enum ArmstongResult {
-	ARMSTRONG_FALSE = 0,
-	ARMSTRONG_TRUE = 1,
-	ARMSTRONG_FAIL = -1
-};
-
-/*Функция проверки числа*/
-enum ArmstongResult check_armstrong(int num, int * sum);
-
 // #define INT_MAX 2'147'483'647
 
-int main()
+int main(void)
 {
 	int num, sum;
 
@@ -72,45 +62,3 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-int count_digits(int n)
-{
-	int res = 1;
-	while (n >= 10)
-		n /= 10, ++res;
-
-	assert(res > 0);
-	return res;
-}
-
-int powi(int n, int p)
-{
-	int res = 1;
-	while (p-- > 0)
-		res *= n;
-
-	return res;
-}
-
-/*Отсчёт идёт от 0, от младших разрядов к старшим.
- * Не предусматривает проверки на корректность*/
-inline static int get_nth_digit(int n, int i)
-{
-	return (n / powi(10, i)) % 10;
-}
-
-enum ArmstongResult check_armstrong(int num, int * sum)
-{
-	if (num < 0)
-		return ARMSTRONG_FAIL;
-
-	int dig_count = count_digits(num);
-	*sum = powi(get_nth_digit(num, 0), dig_count);
-
-	for (int i = dig_count - 1; i > 0; i--)
-		*sum += powi(get_nth_digit(num, i), dig_count);
-
-	if (*sum < 0)
-		return ARMSTRONG_FAIL;
-
-	return (num == *sum) ? ARMSTRONG_TRUE : ARMSTRONG_FALSE;
-}
