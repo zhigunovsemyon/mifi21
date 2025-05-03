@@ -100,6 +100,17 @@ inline static int get_nth_digit(int n, int i)
 
 enum ArmstongResult check_armstrong(int num, int * sum)
 {
-	*sum = get_nth_digit(num, 0);
-	return ARMSTRONG_TRUE;
+	if (num < 0)
+		return ARMSTRONG_FAIL;
+
+	int dig_count = count_digits(num);
+	*sum = powi(get_nth_digit(num, 0), dig_count);
+
+	for (int i = dig_count - 1; i > 0; i--)
+		*sum += powi(get_nth_digit(num, i), dig_count);
+
+	if (*sum < 0)
+		return ARMSTRONG_FAIL;
+
+	return (num == *sum) ? ARMSTRONG_TRUE : ARMSTRONG_FALSE;
 }
