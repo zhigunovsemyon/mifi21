@@ -36,7 +36,7 @@ enum ArmstongResult check_armstrong(int num, int * sum);
 
 int main()
 {
-	constexpr int num = 10;
+	constexpr int num = 1024;
 	int sum;
 
 	switch (check_armstrong(num, &sum)) {
@@ -55,6 +55,15 @@ int main()
 	return EXIT_SUCCESS;
 }
 
+int count_digits(int n)
+{
+	int res = 1;
+	while (n >= 10) 
+		n /= 10, ++res;
+
+	return res;
+}
+
 int powi(int n, int p)
 {
 	int res = 1;
@@ -66,6 +75,6 @@ int powi(int n, int p)
 
 enum ArmstongResult check_armstrong(int num, int * sum)
 {
-	*sum = powi(num, 1);
+	*sum = count_digits(num);
 	return ARMSTRONG_TRUE;
 }
