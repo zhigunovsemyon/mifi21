@@ -36,7 +36,7 @@ enum ArmstongResult check_armstrong(int num, int * sum);
 
 int main()
 {
-	constexpr int num = 0;
+	constexpr int num = 10;
 	int sum;
 
 	switch (check_armstrong(num, &sum)) {
@@ -50,11 +50,22 @@ int main()
 		fputs("Ошибка в процессе анализа переданного числа", stderr);
 		return EXIT_FAILURE;
 	}
+
+	printf("Исходное число: %d, результат расчёта: %d\n", num, sum);
 	return EXIT_SUCCESS;
+}
+
+int powi(int n, int p)
+{
+	int res = 1;
+	while (p-- > 0)
+		res *= n;
+
+	return res;
 }
 
 enum ArmstongResult check_armstrong(int num, int * sum)
 {
-	*sum = num;
-	return ARMSTRONG_FALSE;
+	*sum = powi(num, 1);
+	return ARMSTRONG_TRUE;
 }
