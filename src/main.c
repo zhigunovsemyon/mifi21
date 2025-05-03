@@ -21,6 +21,7 @@
 3. Тестовая программа должна обеспечивать в диалоговом режиме
 ввод числа и вывод результатов его обработки.
 =============================================================================*/
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -34,10 +35,26 @@ enum ArmstongResult {
 /*Функция проверки числа*/
 enum ArmstongResult check_armstrong(int num, int * sum);
 
+//#define INT_MAX 2'147'483'647
+
 int main()
 {
-	constexpr int num = 1024;
-	int sum;
+	int num, sum;
+
+	printf("Введите натуральное число: ");
+	switch (scanf("%d", &num)) {
+	case 0:
+		fputs("Ошибка в процессе ввода\n", stderr);
+		return EXIT_FAILURE;
+	case EOF:
+		putchar('\n');
+		return EXIT_SUCCESS;
+	default:
+		if (num < 0) {
+			fputs("Ошибка в процессе ввода\n", stderr);
+			return EXIT_FAILURE;
+		}
+	}
 
 	switch (check_armstrong(num, &sum)) {
 	case ARMSTRONG_FALSE:
@@ -47,7 +64,7 @@ int main()
 		puts("Проанализированное число является числом Армстронга");
 		break;
 	case ARMSTRONG_FAIL:
-		fputs("Ошибка в процессе анализа переданного числа", stderr);
+		fputs("Ошибка в процессе анализа переданного числа\n", stderr);
 		return EXIT_FAILURE;
 	}
 
@@ -58,9 +75,10 @@ int main()
 int count_digits(int n)
 {
 	int res = 1;
-	while (n >= 10) 
+	while (n >= 10)
 		n /= 10, ++res;
 
+	assert(res > 0);
 	return res;
 }
 
